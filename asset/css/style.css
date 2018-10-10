@@ -1,0 +1,7 @@
+.login-wrapper, .register-wrapper {
+    float: none;
+    margin: 0 auto;
+}
+.register-link label {
+    padding-left: 4px;
+}
