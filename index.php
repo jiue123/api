@@ -1,10 +1,11 @@
 <?php
     session_start();
+    require ('connection/connection.php');
 
-    if ($_GET['page'] == 'register') {
+    if ($_GET['page'] == 'register' && !isset($_SESSION['email'])) {
         $page = $_GET['page'];
-    } else if (!isset($_SESSION['user_name'])) {
-        $page = $_GET['page'] = 'login';
+    } else if (!isset($_SESSION['email'])) {
+        $page = 'login';
     } else {
         $page = $_GET['page'];
     }
@@ -15,7 +16,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Api Website</title>
+    <title><?php echo $page; ?></title>
 
     <link href="asset/bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
@@ -33,9 +34,10 @@
             </div>
             <ul class="nav navbar-nav">
                 <?php
-                    if (isset($_SESSION['user_name'])) {
+                    if (isset($_SESSION['email'])) {
                 ?>
                     <li <?php if ($page == 'home') { ?>class="active"<?php } ?>><a href="index.php?page=home">Home</a></li>
+                    <li><a href="process/logout_process.php">Logout</a></li>
                 <?php
                     } else {
                 ?>
@@ -49,17 +51,21 @@
     <div class="container">
         <div class="row">
             <?php
-                if ($_GET['error'])
-                    require ("error.php");
+                if (isset($_SESSION['error']) || isset($_SESSION['success']))
+                    require ("alert.php");
             ?>
         </div>
         <?php
-            if ($page == 'login') {
-                require ('login.php');
-            } else if ($page == 'home') {
-                require ('home.php');
-            } else if ($page == 'register') {
-                require ('register.php');
+            switch ($page) {
+                case 'login':
+                    require ('login.php');
+                    break;
+                case 'home':
+                    require ('home.php');
+                    break;
+                case 'register':
+                    require ('register.php');
+                    break;
             }
         ?>
     </div>

@@ -1,13 +1,14 @@
 <div class="row">
     <div class="col-md-6 login-wrapper">
-        <form action="" method="post">
+        <form action="process/login_process.php" method="post">
+            <input type="hidden" name="login" value="1">
             <div class="form-group">
-                <label for="exampleInputEmail1">Email address</label>
-                <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Email">
+                <label for="email">Email address</label>
+                <input type="email" name="email" class="form-control" id="email" placeholder="Email" required>
             </div>
             <div class="form-group">
-                <label for="exampleInputPassword1">Password</label>
-                <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+                <label for="password">Password</label>
+                <input type="password" name="password" class="form-control" id="password" placeholder="Password" required>
             </div>
             <div class="checkbox register-link">
                 <label>
