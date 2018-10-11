@@ -3,6 +3,7 @@ session_start();
 if (isset($_POST['login']) && $_POST['login'] == 1) {
     require_once ('../connection/connection.php');
 
+    $conn = connection::dbConnect();
     $email = addslashes(strip_tags($_POST['email']));
     $password = md5(addslashes(strip_tags($_POST['password'])));
 
@@ -10,7 +11,7 @@ if (isset($_POST['login']) && $_POST['login'] == 1) {
         $_SESSION['error'] = 'Email or password must not blank!';
         header("location:../index.php?page=login");
     } else {
-        $sql = "Select * from user where email = '" . $email . "' and password = '" . $password . "'";
+        $sql = "Select * from users where email = '" . $email . "' and password = '" . $password . "'";
         if ($conn->query($sql)->rowCount() > 0) {
             $_SESSION['email'] = $email;
             header("location:../index.php?page=home");

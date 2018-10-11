@@ -1,5 +1,6 @@
 <?php
-    $sql = "Select * from user";
+    $conn = connection::dbConnect();
+    $sql = "Select * from users";
     $res = $conn->query($sql);
 ?>
 <div class="row">

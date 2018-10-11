@@ -2,6 +2,7 @@
 session_start();
 if (isset($_POST['register']) && $_POST['register'] == 1) {
     require_once ('../connection/connection.php');
+    $conn = connection::dbConnect();
 
     header('Content-Type: text/html; charset=UTF-8');
 
@@ -13,13 +14,13 @@ if (isset($_POST['register']) && $_POST['register'] == 1) {
     $create_at = date("Y-m-d h:i:s");
     $update_at = date("Y-m-d h:i:s");
 
-    $sql = "Select * from user where `email` = '" . $email . "'";
+    $sql = "Select * from users where `email` = '" . $email . "'";
     if ($conn->query($sql)->rowCount() > 0) {
         $_SESSION['error'] = 'Email existed';
         header("location:../index.php?page=register");
     } else {
         try {
-            $sql = "insert into user (email, password, name, tel, address, create_at, update_at)
+            $sql = "insert into users (email, password, name, tel, address, create_at, update_at)
                 values ('" . $email . "', '" . $password . "', '" . $name . "', '" . $tel . "', '" . $address . "', '" . $create_at . "','" . $update_at . "')";
             $conn->exec($sql);
             $_SESSION['success'] = 'Register success!';
