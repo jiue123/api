@@ -113,5 +113,7 @@ Bạn có thể cập nhật chỉ một trường ``name`` như sau:
 ```
 type = userAction
 access_token = 5af730bba6d6c8d2a10a4682fbd18840f910fb1ef89d614b2b2926c0a480fb930779a24c497dbff4a98ff41952c56894cab4cc9cd848ab6d1cc9e6b9d06dc17d
-name = Le Thanh Phat
+name = Le Thanh Phat 123
 ```
+
+Nếu tiến trình thành công bạn sẽ nhận được kết quả ``"Update Success"``
