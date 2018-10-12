@@ -22,7 +22,7 @@ $password = "root";
 Thay đổi các giá trị trên trong file ``connection.php`` cho phù hợp với database của mình.
 
 ### #User interface
-Sau khi hoàn thành các bước ở trên bây giờ tao vào phần giao diện người dùng.
+Sau khi hoàn thành các bước ở trên bây giờ tao vào phần giao diện người dùng bằng url ``http://localhost/index.php``
 
 Phần giao diện người dùng có 3 page.
 
@@ -45,7 +45,7 @@ Sau khi đã có ``email`` và ``password`` của ``user`` ta tiến hành lấy
 
 ##### #Get access_token
 
-Sử dụng ``method`` là ``POST``
+Sử dụng ``method`` là ``POST`` gửi request đến ``http://localhost/api.php``
 
 Với các params
 ```
@@ -53,7 +53,7 @@ type = getAccessToken
 email = example@gmail.com
 password = 123456
 ```
-trong đó ``type`` là mặc định các giá trị khác do người dùng tự nhập.
+trong đó ``type`` có giá trị mặc định.
 
 Sau khi ``send request`` ta sẽ nhận được một ``json`` có dạng như sau:
 
@@ -67,7 +67,7 @@ Sau khi ``send request`` ta sẽ nhận được một ``json`` có dạng như 
 
 Lấy thông tin người dùng bằng cách sau:
 
-Sử dụng ``method`` là ``GET`` và ``access_token`` đã lấy được ở bước trên.
+Sử dụng ``method`` là ``GET`` và ``access_token`` đã lấy được ở bước #Get access_token. Gửi request đến ``http://localhost/api.php``
 
 Với các params
 
@@ -75,7 +75,7 @@ Với các params
 type = userAction
 access_token = 5af730bba6d6c8d2a10a4682fbd18840f910fb1ef89d614b2b2926c0a480fb930779a24c497dbff4a98ff41952c56894cab4cc9cd848ab6d1cc9e6b9d06dc17d
 ```
-trong đó ``type`` là mặc định.
+trong đó ``type`` có giá trị mặc định.
 
  
 Sau khi ``send request`` ta sẽ nhận được một ``json`` có dạng như sau:
@@ -95,7 +95,9 @@ Sau khi ``send request`` ta sẽ nhận được một ``json`` có dạng như 
 
 Cập nhật thông tin người dùng bằng cách sau:
 
-Sử dụng ``method`` là ``POST`` và ``access_token`` đã lấy được ở bước #Get access_token.
+Host: ``http://localhost/api.php``
+
+Sử dụng ``method`` là ``POST`` và ``access_token`` đã lấy được ở bước #Get access_token. Gửi request đến ``http://localhost/api.php``
 
 Với các params
 
@@ -107,7 +109,7 @@ tel = 0123456789
 address = 122/6e Truong Sa - Binh Thanh
 password = password
 ```
-trong đó ``type`` là mặc định.
+trong đó ``type`` có giá trị mặc định.
 
 Bạn có thể cập nhật chỉ một trường ``name`` như sau:
 ```
