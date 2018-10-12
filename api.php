@@ -26,7 +26,7 @@ class api extends rest_api {
             if ($res->rowCount() > 0) {
                 $row = $res->fetch();
 
-                $userHash = $this->hashUser($row['email'], $row['tel'], $row['create_at']);
+                $userHash = $this->hashUser($row['email'], $row['create_at']);
                 $accessToken = hash('sha256', random_bytes(40));
 
                 $tokenToClient = [
@@ -62,7 +62,7 @@ class api extends rest_api {
             $sql = $sql = "Select * from users where email = '" . $row['user_email'] . "'";
             $row = $this->conn->query($sql)->fetch();
 
-            $hashUser = $this->hashUser($row['email'], $row['tel'], $row['create_at']);
+            $hashUser = $this->hashUser($row['email'], $row['create_at']);
 
             if($hashUser == $result['hashUser']) {
                 switch ($this->method) {
@@ -79,17 +79,23 @@ class api extends rest_api {
                         $this->response(200, $userInfo);
                         break;
                     case 'POST':
-                        $name = addslashes(strip_tags($this->params['name']));
-                        $tel = addslashes(strip_tags($this->params['tel']));
-                        $address = addslashes(strip_tags($this->params['address']));
-                        $password = md5(addslashes(strip_tags($this->params['password'])));
-                        $update_at = $this->today;
+                        $allowChange = [
+                            'name', 'tel', 'address', 'password'
+                        ];
+
+                        foreach ($this->params as $key => $value) {
+                            if (!in_array($key, $allowChange))
+                                continue;
+
+                            $value = $key != 'password' ? addslashes(strip_tags($value)) : md5(addslashes(strip_tags($value)));
+                            $valueSets[] = $key . "='" . $value . "'";
+                        }
 
                         try {
-                            $sql = "update users set password='" . $password . "', name='" . $name . "', tel='" . $tel . "', address='" . $address . "', update_at='" . $update_at . "'";
+                            $sql = "update users set " . implode(',', $valueSets);
                             $this->conn->exec($sql);
 
-                            $this->response(200, 'Update success');
+                            $this->response(200, 'Update Success');
                         } catch (PDOException $e) {
                             $this->response(500, $e->getMessage());
                         }
@@ -105,8 +111,8 @@ class api extends rest_api {
         }
     }
 
-    private function hashUser($email = null, $tel = null, $create_at = null) {
-        $str = $email . $tel . $create_at;
+    private function hashUser($email = null, $create_at = null) {
+        $str = $email . $create_at;
 
         return hash('sha256', $str);
     }
